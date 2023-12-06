@@ -7,13 +7,20 @@ from datetime import datetime
 class BaseModel:
     """BaseModel Class"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializes a new instance of the BaseModel class."""
-        self.id = str(uuid4())
-        self.my_number = None
-        self.name = None
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            for key, val in kwargs.items():
+                if key == '__class__':
+                    continue
+                if key in ['created_at', 'updated_at']:
+                    setattr(self, key, datetime.strptime(val, "%Y-%m-%dT%H:%M:%S.%f"))
+                else:
+                    setattr(self, key, val)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """Return a string representation of the BaseModel."""
@@ -27,8 +34,6 @@ class BaseModel:
         """Return a dictionary representation of the BaseModel."""
         return {
             'id': self.id,
-            'my_number': self.my_number,
-            'name': self.name,
             '__class__': 'BaseModel',
             'created_at': str(self.created_at),
             'updated_at': str(self.updated_at)
