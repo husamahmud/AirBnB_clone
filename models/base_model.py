@@ -24,7 +24,7 @@ class BaseModel:
 
     def __str__(self):
         """Return a string representation of the BaseModel."""
-        return f"[BaseModel] ({self.id}) {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """Save the current state of the BaseModel."""
@@ -34,7 +34,7 @@ class BaseModel:
         """Return a dictionary representation of the BaseModel."""
         return {
             'id': self.id,
-            '__class__': 'BaseModel',
+            '__class__': self.__class__.__name__,
             'created_at': str(self.created_at),
             'updated_at': str(self.updated_at)
         }
