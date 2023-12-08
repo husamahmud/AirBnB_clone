@@ -13,7 +13,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """
         Creates a new instance of BaseModel, saves it and prints the id
-        Usage: create <Class Name>
+        Usage: create <class>
         """
         if not line:
             print("** class name missing **")
@@ -30,7 +30,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """
         Deletes an instance based on the class name and id
-        Usage: destroy <Class Name> <ID>
+        Usage: destroy <class name> <id>
         """
         if not line:
             print("** class name missing **")
@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """
         Prints the string representation of an instance based on the class name and id
-        Usage: show <Class Name> <ID>
+        Usage: show <class name> <id>
         """
         if not line:
             print("** class name missing **")
