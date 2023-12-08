@@ -21,6 +21,10 @@ class FileStorage:
         key = f"{obj.__class__.__name__}.{obj.id}"
         cls.__objects[key] = obj
 
+    def delete(self, key):
+        """Deletes an object from __objects using the provided key"""
+        del self.__objects[key]
+
     @classmethod
     def save(cls):
         """Serializes __objects to the JSON file"""
