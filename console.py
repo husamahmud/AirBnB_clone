@@ -25,6 +25,7 @@ class HBNBCommand(cmd.Cmd):
             return
         inst = eval(class_name)()
         inst.save()
+        storage.new(inst)
         print(inst.id)
 
     def do_show(self, line):
