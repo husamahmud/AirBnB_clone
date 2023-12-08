@@ -27,6 +27,28 @@ class HBNBCommand(cmd.Cmd):
         inst.save()
         print(inst.id)
 
+    def do_show(self, line):
+        """
+        Prints the string representation of an
+        instance based on the class name and id.
+        Usage: show <Class Name> <ID>
+        """
+        if not line:
+            print("** class name missing **")
+            return
+        args = line.split()
+        if args[0] not in self.__classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        key = f"{args[0]}.{args[1]}"
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        print(storage.all()[key])
+
     def emptyline(self):
         """Do nothing when an empty line is entered"""
         pass
