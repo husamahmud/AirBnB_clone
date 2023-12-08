@@ -4,6 +4,8 @@
 import cmd
 from models import storage
 
+from models.base_model import BaseModel
+
 
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for HBNB"""
@@ -66,6 +68,27 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
         print(storage.all()[key])
+
+    def do_all(self, line):
+        """
+        Prints all string representation of all instances based or not on the class name
+        Usage: all <class name> OR all
+        """
+        objects = storage.all().values()
+        instances = []
+
+        if line:
+            class_name = line.split()[0]
+            if class_name not in self.__classes:
+                print("** class doesn't exist **")
+                return
+            for obj in objects:
+                if obj.__class__.__name__ == class_name:
+                    instances.append(str(obj))
+        else:
+            for obj in objects:
+                instances.append(str(obj))
+        print(instances)
 
     def emptyline(self):
         """Do nothing when an empty line is entered"""
