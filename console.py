@@ -2,7 +2,6 @@
 """Module for the HBNBCommand class and command interpreter"""
 
 import cmd
-import importlib
 from models import storage
 from models.base_model import BaseModel
 
@@ -32,11 +31,11 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing when an empty line is entered"""
         pass
 
-    def do_quit(self):
+    def do_quit(self, line):
         """Exit the program"""
         return True
 
-    def do_EOF(self):
+    def do_EOF(self, line):
         """Exit the program"""
         return True
 
