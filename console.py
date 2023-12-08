@@ -30,8 +30,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """
-        Prints the string representation of an
-        instance based on the class name and id.
+        Prints the string representation of an instance based on the class name and id
         Usage: show <Class Name> <ID>
         """
         if not line:
