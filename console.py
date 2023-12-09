@@ -2,8 +2,8 @@
 """Module for the HBNBCommand class and command interpreter"""
 
 import cmd
-from models import storage
 
+from models import storage
 from models.base_model import BaseModel
 
 
@@ -28,6 +28,38 @@ class HBNBCommand(cmd.Cmd):
         inst.save()
         storage.new(inst)
         print(inst.id)
+
+    def do_update(self, line):
+        """
+        Updates an instance based on the class name and id by adding or updating attribute
+        Usage: update <class name> <id> <attribute name> "<attribute value>"
+        """
+        args = line.split()
+        if len(args) < 2:
+            print("** class name missing **")
+            return
+        if len(args) < 3:
+            print("** instance id missing **")
+            return
+        class_name, inst_id = args[:2]
+        if class_name not in self.__classes:
+            print("** class doesn't exist **")
+            return
+        key = f"{class_name}.{inst_id}"
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        if len(args) < 4:
+            print("** attribute name missing **")
+            return
+        if len(args) < 5:
+            print("** value missing **")
+            return
+        attr_name = args[2]
+        val = eval(args[3])
+        inst = storage.all()[key]
+        setattr(inst, attr_name, val)
+        storage.save()
 
     def do_destroy(self, line):
         """
