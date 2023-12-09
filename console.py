@@ -32,13 +32,13 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print("** class name missing **")
             return
-        args = line.split()
-        if args[0] not in self.__classes:
+        class_name = line.split()[0]
+        if class_name not in self.__classes:
             print("** class doesn't exist **")
             return
-        obj = eval(args[0])()
-        obj.save()
-        print(obj.id)
+        inst = eval(class_name)()
+        inst.save()
+        print(inst.id)
 
     def do_update(self, line):
         """
