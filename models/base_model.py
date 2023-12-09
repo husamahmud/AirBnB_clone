@@ -17,7 +17,7 @@ class BaseModel:
                     continue
                 if key in ['created_at', 'updated_at']:
                     setattr(self, key,
-                            datetime.strptime(val, "%Y-%m-%dT%H:%M:%S.%f"))
+                            datetime.strptime(val, "%Y-%m-%d %H:%M:%S.%f"))
                 else:
                     setattr(self, key, val)
         else:
