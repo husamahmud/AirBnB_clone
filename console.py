@@ -27,19 +27,18 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """
         Creates a new instance of BaseModel, saves it and prints the id
-        Usage: create <class>
+        Usage: create <class name>
         """
         if not line:
             print("** class name missing **")
             return
-        class_name = line.split()[0]
-        if class_name not in self.__classes:
+        args = line.split()
+        if args[0] not in self.__classes:
             print("** class doesn't exist **")
             return
-        inst = eval(class_name)()
-        inst.save()
-        storage.new(inst)
-        print(inst.id)
+        obj = eval(args[0])()
+        obj.save()
+        print(obj.id)
 
     def do_update(self, line):
         """
