@@ -2,7 +2,6 @@
 """Module for FileStorage class"""
 
 import json
-import os
 
 from models.base_model import BaseModel
 from models.user import User
@@ -42,8 +41,12 @@ class FileStorage:
 
     def reload(self):
         """Deserializes the JSON file to __objects"""
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, "r") as f:
-                my_dict = json.load(f)
-                for key, val in my_dict.items():
-                    self.__objects[key] = eval(val['__class__'])(**val)
+        try:
+            with open(self.__file_path) as f:
+                objects = json.load(f)
+                for obj in objects.values():
+                    cls_name = obj["__class__"]
+                    del obj["__class__"]
+                    self.new(eval(cls_name)(**obj))
+        except FileNotFoundError:
+            return
