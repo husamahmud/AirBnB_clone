@@ -28,10 +28,6 @@ class FileStorage:
         key = f"{obj.__class__.__name__}.{obj.id}"
         cls.__objects[key] = obj
 
-    def delete(self, key):
-        """Deletes an object from __objects using the provided key"""
-        del self.__objects[key]
-
     @classmethod
     def save(cls):
         """Serializes __objects to the JSON file"""
@@ -39,14 +35,14 @@ class FileStorage:
         with open(cls.__file_path, 'w') as f:
             json.dump(my_dict, f)
 
-    def reload(self):
-        """Deserializes the JSON file to __objects"""
+    @classmethod
+    def reload(cls):
         try:
-            with open(self.__file_path) as f:
+            with open(cls.__file_path) as f:
                 objects = json.load(f)
-                for obj in objects.values():
-                    cls_name = obj["__class__"]
-                    del obj["__class__"]
-                    self.new(eval(cls_name)(**obj))
+                for key, value in objects.items():
+                    cls_name = value["__class__"]
+                    del value["__class__"]
+                    cls.new(eval(f"{cls_name}(**value)"))
         except FileNotFoundError:
-            return
+            pass
