@@ -31,7 +31,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """
-        Updates an instance based on the class name and id by adding or updating attribute
+        Updates an instance based on the class name and id by adding or
+        updating attribute
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
         args = line.split()
@@ -82,7 +83,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """
-        Prints the string representation of an instance based on the class name and id
+        Prints the string representation of an instance based on the class
+        name and id
         Usage: show <class name> <id>
         """
         if not line:
@@ -103,7 +105,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """
-        Prints all string representation of all instances based or not on the class name
+        Prints all string representation of all instances based or not on the
+        class name
         Usage: all <class name> OR all
         """
         objects = storage.all().values()
