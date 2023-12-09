@@ -47,10 +47,10 @@ class HBNBCommand(cmd.Cmd):
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
         args = line.split()
-        if len(args) < 2:
+        if not line:
             print("** class name missing **")
             return
-        if len(args) < 3:
+        if len(args) < 2:
             print("** instance id missing **")
             return
         class_name, inst_id = args[:2]
@@ -61,10 +61,10 @@ class HBNBCommand(cmd.Cmd):
         if key not in storage.all():
             print("** no instance found **")
             return
-        if len(args) < 4:
+        if len(args) < 3:
             print("** attribute name missing **")
             return
-        if len(args) < 5:
+        if len(args) < 4:
             print("** value missing **")
             return
         attr_name = args[2]
