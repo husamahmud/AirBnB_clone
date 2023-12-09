@@ -37,6 +37,7 @@ class FileStorage:
 
     @classmethod
     def reload(cls):
+        """Deserializes __objects from the JSON file"""
         try:
             with open(cls.__file_path) as f:
                 objects = json.load(f)
