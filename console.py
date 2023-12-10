@@ -2,6 +2,7 @@
 """Module for the HBNBCommand class and command interpreter"""
 
 import cmd
+import re
 
 from models import storage
 from models.base_model import BaseModel
@@ -138,6 +139,18 @@ class HBNBCommand(cmd.Cmd):
             for obj in objects:
                 instances.append(str(obj))
         print(instances)
+
+    def do_count(self, line):
+        """
+        Counts the number of instances of a specific class in the storage.
+        Usage: count <class name>
+        """
+        args = line.split()
+        count = 0
+        for obj in storage.all().values():
+            if args[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
 
     def emptyline(self):
         """Do nothing when an empty line is entered"""
