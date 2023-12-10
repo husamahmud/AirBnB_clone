@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Module for BaseModel class"""
 from uuid import uuid4
-from datetime import datetime
+import datetime
 
 import models
 
@@ -16,13 +16,12 @@ class BaseModel:
                 if key == '__class__':
                     continue
                 if key in ['created_at', 'updated_at']:
-                    setattr(self, key,
-                            datetime.strptime(val, "%Y-%m-%d %H:%M:%S.%f"))
+                    setattr(self, key, datetime.datetime.fromisoformat(val))
                 else:
                     setattr(self, key, val)
         else:
             self.id = str(uuid4())
-            self.created_at = datetime.now()
+            self.created_at = datetime.datetime.now()
             self.updated_at = self.created_at
             models.storage.new(self)
 
@@ -32,7 +31,7 @@ class BaseModel:
 
     def save(self):
         """Save the current state of the BaseModel."""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.datetime.now()
         models.storage.save()
 
     def to_dict(self):
@@ -40,6 +39,6 @@ class BaseModel:
         return {
             'id': self.id,
             '__class__': self.__class__.__name__,
-            'created_at': str(self.created_at),
-            'updated_at': str(self.updated_at)
+            'created_at': str(self.created_at.isoformat()),
+            'updated_at': str(self.updated_at.isoformat())
         }
