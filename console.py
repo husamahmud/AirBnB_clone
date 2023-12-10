@@ -35,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
             "show": self.do_show,
             "destroy": self.do_destroy,
             "count": self.do_count,
+            "create": self.do_create,
             "update": self.do_update
         }
         match = re.search(r"(\w+)\.(.*?)\((.*?)\)", line)
@@ -147,7 +148,6 @@ class HBNBCommand(cmd.Cmd):
         """
         objects = storage.all().values()
         instances = []
-
         if line:
             class_name = line.split()[0]
             if class_name not in self.__classes:
@@ -183,6 +183,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """Exit the program"""
+        print()
         return True
 
 
