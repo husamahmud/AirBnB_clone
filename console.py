@@ -25,6 +25,27 @@ class HBNBCommand(cmd.Cmd):
                  "Place",
                  "Review"]
 
+    def default(self, line):
+        """
+        Handles the default command-line input
+        Usage for: all, show, destroy, count and update
+        """
+        cmds = {
+            "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "count": self.do_count,
+            "update": self.do_update
+        }
+        match = re.search(r"(\w+)\.(.*?)\((.*?)\)", line)
+        if match:
+            obj_name, cmd, args = match.groups()
+            if cmd in cmds:
+                call = f'{obj_name} {args}'
+                return cmds[cmd](call)
+        print(f"*** Unknown syntax: {line}")
+        return False
+
     def do_create(self, line):
         """
         Creates a new instance of BaseModel, saves it and prints the id
@@ -142,7 +163,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_count(self, line):
         """
-        Counts the number of instances of a specific class in the storage.
+        Counts the number of instances of a specific class in the storage
         Usage: count <class name>
         """
         args = line.split()
