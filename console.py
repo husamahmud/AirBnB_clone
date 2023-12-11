@@ -40,11 +40,12 @@ class HBNBCommand(cmd.Cmd):
         match = re.search(r"(\w+)\.(.*?)\((.*?)\)", line)
         if match:
             obj_name, cmd, args = match.groups()
-            # update BaseModel 1234-1234-1234 email "aibnb@mail.com"
-            # User.update(c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam)
             if cmd == 'update':
                 splited = args.split(', ')
-                key = f"{obj_name}.{splited[0]}"
+                obj_id = splited[0][1:-1]
+                attr_name = splited[1][1:-1]
+                attr_val = splited[2][1:-1]
+                key = f"{obj_name}.{obj_id}"
                 if len(splited) < 2:
                     print("** attribute name missing **")
                     return
@@ -54,8 +55,7 @@ class HBNBCommand(cmd.Cmd):
                 if key not in storage.all():
                     print("** no instance found **")
                     return
-                attr_name = splited[1]
-                val = eval(f'"{splited[2]}"')
+                val = eval(f'"{attr_val}"')
                 inst = storage.all()[key]
                 setattr(inst, attr_name, val)
                 storage.save()
@@ -66,13 +66,6 @@ class HBNBCommand(cmd.Cmd):
         print(f"*** Unknown syntax: {line}")
         return False
 
-    # c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam
-    # def _update(args):
-    # s = "c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam"
-    # splited_s = s.split(', ')
-    # print(splited_s[0])
-    # print(splited_s[1])
-    # print(splited_s[2])
     def do_create(self, line):
         """
         Creates a new instance of BaseModel, saves it and prints the id
