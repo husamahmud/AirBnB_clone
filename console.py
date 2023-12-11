@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if match:
             obj_name, cmd, args = match.groups()
             if cmd == 'update':
-                # update an instance based on his ID
+                # to update an instance based on his ID with a dictionary
                 if "{" in args:
                     comma_idx = args.index(',')
                     obj_id = args[:comma_idx].strip()[1:-1]
@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
                         print("** invalid dictionary format **")
                         return
                     return
-                # to update an instance based on his ID with a dictionary
+                # update an instance based on his ID
                 splited = args.split(', ')
                 obj_id = splited[0][1:-1]
                 attr_name = splited[1][1:-1]
