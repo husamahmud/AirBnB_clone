@@ -35,18 +35,44 @@ class HBNBCommand(cmd.Cmd):
             "show": self.do_show,
             "destroy": self.do_destroy,
             "count": self.do_count,
-            "create": self.do_create,
-            "update": self.do_update
+            "create": self.do_create
         }
         match = re.search(r"(\w+)\.(.*?)\((.*?)\)", line)
         if match:
             obj_name, cmd, args = match.groups()
+            # update BaseModel 1234-1234-1234 email "aibnb@mail.com"
+            # User.update(c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam)
+            if cmd == 'update':
+                splited = args.split(', ')
+                key = f"{obj_name}.{splited[0]}"
+                if len(splited) < 2:
+                    print("** attribute name missing **")
+                    return
+                if len(splited) < 3:
+                    print("** value missing **")
+                    return
+                if key not in storage.all():
+                    print("** no instance found **")
+                    return
+                attr_name = splited[1]
+                val = eval(f'"{splited[2]}"')
+                inst = storage.all()[key]
+                setattr(inst, attr_name, val)
+                storage.save()
+                return
             if cmd in cmds:
                 call = f'{obj_name} {args}'
                 return cmds[cmd](call)
         print(f"*** Unknown syntax: {line}")
         return False
 
+    # c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam
+    # def _update(args):
+    # s = "c0652e17-a7c4-4622-b443-ba4e8ab37e43, fname, husam"
+    # splited_s = s.split(', ')
+    # print(splited_s[0])
+    # print(splited_s[1])
+    # print(splited_s[2])
     def do_create(self, line):
         """
         Creates a new instance of BaseModel, saves it and prints the id
