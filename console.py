@@ -3,6 +3,7 @@
 
 import cmd
 import re
+import ast
 
 from models import storage
 from models.base_model import BaseModel
@@ -41,6 +42,26 @@ class HBNBCommand(cmd.Cmd):
         if match:
             obj_name, cmd, args = match.groups()
             if cmd == 'update':
+                # update an instance based on his ID
+                if "{" in args:
+                    comma_idx = args.index(',')
+                    obj_id = args[:comma_idx].strip()[1:-1]
+                    dict_str = args[comma_idx + 1:].strip()
+                    key = f"{obj_name}.{obj_id}"
+                    if key not in storage.all():
+                        print("** no instance found **")
+                        return
+                    obj = storage.all()[key]
+                    try:
+                        update_dict = ast.literal_eval(dict_str)
+                        for attr_name, attr_value in update_dict.items():
+                            setattr(obj, attr_name, attr_value)
+                            storage.save()
+                    except (ValueError, SyntaxError):
+                        print("** invalid dictionary format **")
+                        return
+                    return
+                # to update an instance based on his ID with a dictionary
                 splited = args.split(', ')
                 obj_id = splited[0][1:-1]
                 attr_name = splited[1][1:-1]
