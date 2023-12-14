@@ -1,0 +1,37 @@
+ul {
+    list-style: none;
+    margin: 0;
+}
+
+.filters {
+    div {
+        position: relative;
+
+        .popover {
+            position: absolute;
+            display: none;
+            top: 100%;
+            left: -1px;
+            width: calc(100% - 16px);
+            padding: 16px 0 16px 16px;
+            background-color: #FAFAFA;
+            border: 1px solid #DDDDDD;
+
+            li ul {
+                padding-left: 16px;
+            }
+
+            .top {
+                padding-bottom: 16px;
+            }
+        }
+    }
+}
+
+.locations:hover .popover {
+    display: block;
+}
+
+.amenities:hover .popover {
+    display: block;
+}
