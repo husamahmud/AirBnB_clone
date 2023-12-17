@@ -130,6 +130,6 @@ The AirBnB console supports the following commands:
 
 <hr>
 
-## Authors ✍️
+## Author ✍️
 
 - Hüsam Mahmud <[husamahmud](https://github.com/husamahmud)>
